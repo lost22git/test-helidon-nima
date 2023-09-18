@@ -1,0 +1,52 @@
+plugins {
+  id("application")
+  alias(libs.plugins.shadow)
+  alias(libs.plugins.ebean)
+}
+
+dependencies {
+  // logging
+  implementation(libs.logback)
+
+  // jackson json
+  implementation(libs.bundles.jackson)
+
+  // record builder
+  annotationProcessor(libs.record.builder.processor)
+  implementation(libs.record.builder)
+
+  // ebean
+  implementation(libs.ebean)
+  annotationProcessor(libs.ebean.querybean.generator)
+  implementation(libs.ebean.querybean)
+
+  // sqlite
+  runtimeOnly(libs.sqlite)
+
+  // helidon
+  implementation(platform(libs.helidon))
+  // for 4.0.0.M2+ and java 21
+//  implementation("io.helidon.webserver:helidon-webserver")
+//  implementation("io.helidon.http.media:helidon-http-media-jackson")
+//  implementation("io.helidon.webserver:helidon-webserver-cors")
+//  implementation("io.helidon.openapi:helidon-openapi")
+  // for 4.0.0.M1 and java 20
+  implementation("io.helidon.nima.webserver:helidon-nima-webserver")
+  implementation("io.helidon.nima.http.media:helidon-nima-http-media-jackson")
+  implementation("io.helidon.nima.webserver:helidon-nima-webserver-cors")
+}
+
+ebean {
+  debugLevel = 0 //0 - 9
+}
+
+test {
+  testLogging.showStandardStreams = true
+  testLogging.exceptionFormat = 'full'
+}
+
+ext {
+  mainClass = "lost.test.helidon.Main"
+}
+
+apply from: "../script/gradle/shadow_jar.gradle"

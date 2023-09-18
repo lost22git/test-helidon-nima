@@ -3,6 +3,8 @@ assertj = "3.24.2"
 avaje-jsonb = "1.5-RC1"
 awaitility = "4.2.0"
 easyrandom = "6.1.5"
+ebean = "13.22.0"
+helidon = "4.0.0-M1"
 immutables = "2.9.3"
 jackson = "2.13.4"
 jetbrains-annotations = "24.0.1"
@@ -24,6 +26,7 @@ plugin-version-catalog-update = "0.8.0"
 plugin-versions = "0.46.0"
 record-builder = "36"
 slf4j = "2.0.7"
+sqlite = "3.43.0.0"
 
 [libraries]
 assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
@@ -31,6 +34,10 @@ avaje-jsonb = { module = "io.avaje:avaje-jsonb", version.ref = "avaje-jsonb" }
 avaje-jsonb-generator = { module = "io.avaje:avaje-jsonb-generator", version.ref = "avaje-jsonb" }
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }
 easyrandom-core = { module = "io.github.dvgaba:easy-random-core", version.ref = "easyrandom" }
+ebean = { module = "io.ebean:ebean", version.ref = "ebean" }
+ebean-querybean = { module = "io.ebean:ebean-querybean", version.ref = "ebean" }
+ebean-querybean-generator = { module = "io.ebean:querybean-generator", version.ref = "ebean" }
+helidon = { module = "io.helidon:helidon-bom", version.ref = "helidon" }
 immutables = { module = "org.immutables:value", version.ref = "immutables" }
 jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson" }
 jackson-datatype-jdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8", version.ref = "jackson" }
@@ -47,22 +54,23 @@ logstash-logback-encoder = { module = "net.logstash.logback:logstash-logback-enc
 record-builder = { module = "io.soabase.record-builder:record-builder-core", version.ref = "record-builder" }
 record-builder-processor = { module = "io.soabase.record-builder:record-builder-processor", version.ref = "record-builder" }
 slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
 
 [bundles]
 jackson = [
-    "jackson-annotations",
-    "jackson-datatype-jdk8",
-    "jackson-jsr310",
-    "jackson-module-parameter-names",
+  "jackson-annotations",
+  "jackson-datatype-jdk8",
+  "jackson-jsr310",
+  "jackson-module-parameter-names",
 ]
 jmh = [
-    "jmh-core",
-    "jmh-generator-annprocess",
+  "jmh-core",
+  "jmh-generator-annprocess",
 ]
 junit = [
-    "junit-jupiter-api",
-    "junit-jupiter-engine",
-    "junit-jupiter-params",
+  "junit-jupiter-api",
+  "junit-jupiter-engine",
+  "junit-jupiter-params",
 ]
 
 [plugins]
@@ -78,3 +86,4 @@ spotless = { id = "com.diffplug.spotless", version.ref = "plugin-spotless" }
 taskinfo = { id = "org.barfuin.gradle.taskinfo", version.ref = "plugin-taskinfo" }
 version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "plugin-version-catalog-update" }
 versions = { id = "com.github.ben-manes.versions", version.ref = "plugin-versions" }
+ebean = { id = "io.ebean", version.ref = "ebean" }

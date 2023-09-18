@@ -6,14 +6,13 @@ plugins {
 }
 
 allprojects {
-  group = ""
+  group = "lost.test-helidon-nima"
   version = "0.0.1"
 
   repositories {
     mavenLocal()
     mavenCentral()
   }
-
 }
 
 subprojects {
@@ -27,9 +26,6 @@ subprojects {
   }
 
   dependencies {
-    // annotation
-    compileOnly(libs.jetbrains.annotations)
-    testCompileOnly(libs.jetbrains.annotations)
     // log
     implementation(libs.slf4j)
     // test

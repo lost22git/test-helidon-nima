@@ -1,13 +1,11 @@
 pluginManagement {
   repositories {
-    maven { url 'https://repo.spring.io/release' }
-    maven { url 'https://repo.spring.io/milestone' }
-    maven { url 'https://repo.spring.io/snapshot' }
     mavenLocal()
     mavenCentral()
     gradlePluginPortal()
   }
 }
 
-rootProject.name = ""
+rootProject.name = "root"
+include 'app'
 
