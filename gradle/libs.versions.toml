@@ -4,6 +4,7 @@ avaje-jsonb = "1.5-RC1"
 awaitility = "4.2.0"
 easyrandom = "6.1.5"
 ebean = "13.22.0"
+ebean-jakarta = "13.22.0-jakarta"
 helidon = "4.0.0-M1"
 immutables = "2.9.3"
 jackson = "2.13.4"
@@ -34,9 +35,9 @@ avaje-jsonb = { module = "io.avaje:avaje-jsonb", version.ref = "avaje-jsonb" }
 avaje-jsonb-generator = { module = "io.avaje:avaje-jsonb-generator", version.ref = "avaje-jsonb" }
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }
 easyrandom-core = { module = "io.github.dvgaba:easy-random-core", version.ref = "easyrandom" }
-ebean = { module = "io.ebean:ebean", version.ref = "ebean" }
-ebean-querybean = { module = "io.ebean:ebean-querybean", version.ref = "ebean" }
-ebean-querybean-generator = { module = "io.ebean:querybean-generator", version.ref = "ebean" }
+ebean = { module = "io.ebean:ebean", version.ref = "ebean-jakarta" }
+ebean-querybean = { module = "io.ebean:ebean-querybean", version.ref = "ebean-jakarta" }
+ebean-querybean-generator = { module = "io.ebean:querybean-generator", version.ref = "ebean-jakarta" }
 helidon = { module = "io.helidon:helidon-bom", version.ref = "helidon" }
 immutables = { module = "org.immutables:value", version.ref = "immutables" }
 jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson" }

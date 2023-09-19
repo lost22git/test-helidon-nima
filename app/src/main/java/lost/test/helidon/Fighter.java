@@ -5,11 +5,11 @@ import io.ebean.annotation.Identity;
 import io.ebean.annotation.Index;
 import io.ebean.annotation.NotNull;
 import io.soabase.recordbuilder.core.RecordBuilderFull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @RecordBuilderFull
 @Entity
