@@ -1,0 +1,82 @@
+// Native-Image
+// 1. ` .\gradlew :<project>:clean && .\gradlew :<project>:build `
+//
+// 2. 加载 agent 运行 fatJar, 生成 config 文件到 ./<project>/src/main/nativeimage
+// ` java -agentlib:native-image-agent=config-merge-dir="./<project>/src/main/nativeimage" -jar .\<project>\build\libs\<project>-1.0.0-all.jar `
+//
+// 3. ` .\gradlew :<project>:nativeCompile `
+def nativeConfigDir = "src/main/nativeimage"
+def nativeBuildArgs = [
+  "--no-fallback",
+  "-H:+ReportExceptionStackTraces",
+  "--report-unsupported-elements-at-runtime",
+//      "-H:+PrintUniverse",
+  "--features=org.graalvm.home.HomeFinderFeature",
+  "-H:+PlatformInterfaceCompatibilityMode",
+  """--initialize-at-build-time=
+    org.slf4j.impl.StaticLoggerBinder,
+    org.slf4j.LoggerFactory,
+    ch.qos.logback.classic.Logger,
+    ch.qos.logback.classic.Level,
+    ch.qos.logback.core.spi.AppenderAttachableImpl,
+    ch.qos.logback.core.status.StatusBase,
+    ch.qos.logback.core.status.InfoStatus,
+    ch.qos.logback.core.CoreConstants
+  """.replaceAll("\\s",""),
+  """--trace-class-initialization=ch.qos.logback.core.util.Loader,
+  ch.qos.logback.core.util.StatusPrinter,
+  ch.qos.logback.core.pattern.parser.Parser
+  """.replaceAll("\\s",""),
+]
+graalvmNative {
+  toolchainDetection = false
+//  metadataRepository {
+//    enabled = true
+//  }
+  binaries {
+    main {
+      // == Main options
+      // The name of the native image, defaults to the project name
+      mainClass = "${project.mainClass}"
+      // The main class to use, defaults to the application.mainClass
+      imageName = rootProject.name + "." + project.name + "-" + project.version
+      // Determines if debug info should be generated, defaults to false
+      debug = false
+      // Add verbose output, defaults to f1lse
+      verbose = false
+      // Sets the fallback mode of native-image, defaults to false
+      fallback = false
+      // Determines if image is a shared library, defaults to false if `java-library` plugin isn't included
+      sharedLibrary = false
+      // Determines if image is being built in quick build mode (alternatively use GRAALVM_QUICK_BUILD environment variable)
+      quickBuild = false
+      // Determines if native-image building should be done with rich output
+      richOutput = false
+      // Sets the system properties to use for the native image builder
+//      systemProperties = [name1: 'value1', name2: 'value2']
+      // Adds a native image configuration file directory, containing files like reflection configuration
+      configurationFileDirectories.from(file(nativeConfigDir))
+
+      // == Advanced options
+      buildArgs.addAll(nativeBuildArgs)
+
+      // Passes '-H:Extra' to the native image builder options. This can be used to pass parameters which are not directly supported by this extension
+      jvmArgs.add('--enable-preview')
+      // Passes 'flag' directly to the JVM running the native image builder
+
+      // == Runtime options
+//      runtimeArgs.add('--help')
+      // Passes '--help' to built image, during "nativeRun" task
+
+      // == Development options
+//      agent {
+//        options.add("experimental-class-loader-support")
+//        enabled = true
+//        // Enables the reflection agent. Can be also set on command line using '-Pagent'
+//      }
+
+      // Instead of passing each jar individually, builds a fat jar
+      useFatJar = true
+    }
+  }
+}

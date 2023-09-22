@@ -1,15 +1,16 @@
 package lost.test.helidon;
 
-import static io.helidon.common.http.HttpMediaType.JSON_UTF_8;
+import static io.helidon.http.HttpMediaTypes.JSON_UTF_8;
 import static java.time.OffsetDateTime.now;
 import static java.time.ZoneOffset.UTC;
 import static lost.test.helidon.Result.ok;
 
 import io.ebean.Database;
-import io.helidon.nima.webserver.http.HttpRules;
-import io.helidon.nima.webserver.http.HttpService;
-import io.helidon.nima.webserver.http.ServerRequest;
-import io.helidon.nima.webserver.http.ServerResponse;
+import io.helidon.webserver.http.HttpRules;
+import io.helidon.webserver.http.HttpService;
+import io.helidon.webserver.http.ServerRequest;
+import io.helidon.webserver.http.ServerResponse;
+import java.util.Collection;
 import lost.test.helidon.query.QFighter;
 
 public class FighterRouter implements HttpService {
@@ -46,7 +47,7 @@ public class FighterRouter implements HttpService {
         var fighterCreate = req.content().as(FighterCreate.class);
         var fighterInsert = FighterBuilder.builder()
                 .name(fighterCreate.name())
-                .addSkill(fighterCreate.skill())
+                .addSkill((Iterable<String>) fighterCreate.skill())
                 .createdAt(now(UTC))
                 .build();
 
@@ -71,7 +72,7 @@ public class FighterRouter implements HttpService {
                     .findOneOrEmpty()
                     .orElseThrow();
             fighterUpdate = FighterBuilder.builder(found)
-                    .skill(fighterEdit.skill())
+                    .skill((Collection<String>) fighterEdit.skill())
                     .updatedAt(now(UTC))
                     .build();
             db.update(fighterUpdate);

@@ -2,6 +2,7 @@ plugins {
   id("application")
   alias(libs.plugins.shadow)
   alias(libs.plugins.ebean)
+  alias(libs.plugins.nativeimage)
 }
 
 dependencies {
@@ -21,19 +22,19 @@ dependencies {
   implementation(libs.ebean.querybean)
 
   // sqlite
-  runtimeOnly(libs.sqlite)
+  implementation(libs.sqlite)
+
 
   // helidon
   implementation(platform(libs.helidon))
   // for 4.0.0.M2+ and java 21
-//  implementation("io.helidon.webserver:helidon-webserver")
-//  implementation("io.helidon.http.media:helidon-http-media-jackson")
-//  implementation("io.helidon.webserver:helidon-webserver-cors")
-//  implementation("io.helidon.openapi:helidon-openapi")
+  implementation("io.helidon.webserver:helidon-webserver")
+  implementation("io.helidon.http.media:helidon-http-media-jackson")
+  implementation("io.helidon.webserver:helidon-webserver-cors")
   // for 4.0.0.M1 and java 20
-  implementation("io.helidon.nima.webserver:helidon-nima-webserver")
-  implementation("io.helidon.nima.http.media:helidon-nima-http-media-jackson")
-  implementation("io.helidon.nima.webserver:helidon-nima-webserver-cors")
+//  implementation("io.helidon.nima.webserver:helidon-nima-webserver")
+//  implementation("io.helidon.nima.http.media:helidon-nima-http-media-jackson")
+//  implementation("io.helidon.nima.webserver:helidon-nima-webserver-cors")
 }
 
 ebean {
@@ -50,3 +51,4 @@ ext {
 }
 
 apply from: "../script/gradle/shadow_jar.gradle"
+apply from: '../script/gradle/native_image.gradle'

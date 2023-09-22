@@ -13,9 +13,9 @@ import io.ebean.Database;
 import io.ebean.DatabaseFactory;
 import io.ebean.config.DatabaseConfig;
 import io.ebean.datasource.DataSourceConfig;
-import io.helidon.nima.http.media.jackson.JacksonSupport;
-import io.helidon.nima.webserver.WebServer;
-import io.helidon.nima.webserver.cors.CorsSupport;
+import io.helidon.http.media.jackson.JacksonSupport;
+import io.helidon.webserver.WebServer;
+import io.helidon.webserver.cors.CorsSupport;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,12 +80,16 @@ public class Main {
                 .allowOrigins("*")
                 .allowHeaders("*")
                 .allowMethods("*")
+                .allowCredentials(true)
                 .build();
 
         WebServer.builder()
                 .port(startupInfo.port)
                 .mediaContext(c -> c.addMediaSupport(jacksonSupport))
-                .routing(r -> r.register("/fighter", cors, new FighterRouter(db)))
+                .routing(r -> {
+                    r.register(cors);
+                    r.register("/fighter", new FighterRouter(db));
+                })
                 .build()
                 .start();
     }
