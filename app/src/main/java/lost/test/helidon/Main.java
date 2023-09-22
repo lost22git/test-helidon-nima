@@ -1,8 +1,5 @@
 package lost.test.helidon;
 
-import static java.time.OffsetDateTime.now;
-import static java.time.ZoneOffset.UTC;
-
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -16,9 +13,14 @@ import io.ebean.datasource.DataSourceConfig;
 import io.helidon.http.media.jackson.JacksonSupport;
 import io.helidon.webserver.WebServer;
 import io.helidon.webserver.cors.CorsSupport;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
+import static java.time.OffsetDateTime.now;
+import static java.time.ZoneOffset.UTC;
+import static lost.test.helidon.Result.ok;
 
 public class Main {
 
@@ -87,6 +89,8 @@ public class Main {
                 .port(startupInfo.port)
                 .mediaContext(c -> c.addMediaSupport(jacksonSupport))
                 .routing(r -> {
+                    r.get("/baseline/text", (req, res) -> res.send("lost"));
+                    r.get("/baseline/json", (req, res) -> res.send(ok("lost")));
                     r.register(cors);
                     r.register("/fighter", new FighterRouter(db));
                 })
