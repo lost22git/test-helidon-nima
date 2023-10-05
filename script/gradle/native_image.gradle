@@ -7,6 +7,7 @@
 // 3. ` .\gradlew :<project>:nativeCompile `
 def nativeConfigDir = "src/main/nativeimage"
 def nativeBuildArgs = [
+  "--verbose",
   "--no-fallback",
   "-H:+ReportExceptionStackTraces",
   "--report-unsupported-elements-at-runtime",
@@ -27,6 +28,7 @@ def nativeBuildArgs = [
   ch.qos.logback.core.util.StatusPrinter,
   ch.qos.logback.core.pattern.parser.Parser
   """.replaceAll("\\s",""),
+  "-Dorg.sqlite.lib.exportPath=${project.layout.buildDirectory.get()}"
 ]
 graalvmNative {
   toolchainDetection = false

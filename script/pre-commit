@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 stagedFiles=$(git diff --staged --name-only)
 
 echo "Running './gradlew spotlessApply' ..."
